@@ -58,7 +58,7 @@ var MenuView = (function() {
     MenuView.prototype.constructor = MenuView;
     
     MenuView.prototype.fadeIn = function() {
-        createjs.Ticker.addEventListener("tick", this.tick.bind(this));
+        //createjs.Ticker.addEventListener("tick", this.tick.bind(this));
         this.stage.addChild(root);
         
         var fadeInTime = 500;
@@ -80,7 +80,7 @@ var MenuView = (function() {
     };
               
     MenuView.prototype.tick = function() {            
-        this.stage.update();
+        //this.stage.update();
     };
     
     function onShowEvent(evt) {
@@ -89,7 +89,7 @@ var MenuView = (function() {
     
     function onHideEvent(evt) {
         this.stage.removeChild(root);
-        createjs.Ticker.removeEventListener("tick", this.tick.bind(this));
+        //createjs.Ticker.removeEventListener("tick", this.tick.bind(this));
     }
     
     return MenuView;

@@ -7,8 +7,8 @@ var GameView = (function() {
     var DEFAULT_HINTS = 2;
     var DEFAULT_TIME_ADDS = 4;
     
-    var MATCHES_NEEDED_FOR_TIME = 5;
-    var MATCHES_NEEDED_FOR_HINT = 6;
+    var MATCHES_NEEDED_FOR_TIME = 6;
+    var MATCHES_NEEDED_FOR_HINT = 7;
     var MATCH_SCORE_INC = 20;
     
     var TEXT_COLOR = '#806142';
@@ -33,6 +33,7 @@ var GameView = (function() {
         root.y += 10;
         
         //setup default params
+        this.playSounds = true;
         this.matchCountInLevel = 0;
         this.running = false;
         this.level = 1;
@@ -143,19 +144,33 @@ var GameView = (function() {
                                 scoreX, scoreY += lineOff);
         this.scorePanel.addChild(this.totalScoreLabel);
         
-        //determine final size
         scoreY += lineOff;
         
         var sep2 = new createjs.Shape(separator);
         sep2.y = scoreY + PAD;
         this.scorePanel.addChild(sep2);
         
+        var lastY = sep2.y + PAD*2;
+        
+        //if sound works, we can also add that button...
+        if (this.resources.soundWorks) {
+            //toggle sound button
+            this.soundButton = imgButton('on', 'audio-on',
+                                        PAD, lastY,
+                                        soundButtonCallback.bind(this));
+            this.scorePanel.addChild(this.soundButton);
+            lastY += this.soundButton.height + PAD;
+        }
+        
+        //add the exit to menu button at the end
         this.exitButton = imgButton('menu', 'menu', 
-                                    PAD, sep2.y + PAD*2,
+                                    PAD, lastY,
                                     exitButtonCallback.bind(this));
         this.scorePanel.addChild(this.exitButton);
         
-        this.scorePanel.height = this.exitButton.y + this.exitButton.height + PAD*2;
+        
+        //determine final size
+        this.scorePanel.height = lastY + this.exitButton.height + PAD*2;
         this.scorePanel.width = this.exitButton.width + PAD*2;
         
         //the panel for our buttons/score
@@ -170,7 +185,7 @@ var GameView = (function() {
         
     GameView.prototype.fadeIn = function() {
         this.stop(); //ensure its not running...
-        createjs.Ticker.addEventListener("tick", this.tick.bind(this));
+        //createjs.Ticker.addEventListener("tick", this.tick.bind(this));
         this.stage.addChild(root);
         createjs.Tween.get(root, {override:true})
             .to({alpha:1.0}, 500, createjs.Ease.quadIn)
@@ -211,7 +226,7 @@ var GameView = (function() {
         } else {
             this.timeRemainingLabel.text = '';
         }
-        this.stage.update();
+        //this.stage.update();
     };
     
     GameView.prototype.updateLabels = function() {        
@@ -244,24 +259,17 @@ var GameView = (function() {
     
     //loads the next level
     GameView.prototype.nextLevel = function() {
-        
-        if (this.levelTilesX == this.grid.MAX_TILES_X 
-                 && this.levelTilesY == this.grid.MAX_TILES_Y) {
-            modalPane.fadeIn('You win!', 'final score: '+this.totalScore,
-                                 this.restart.bind(this));
-        } else {
-            this.levelTilesX = Math.min(this.grid.MAX_TILES_X, this.levelTilesX+1);
-            this.levelTilesY = Math.min(this.grid.MAX_TILES_Y, this.levelTilesY+1);
-            this.matchCountInLevel = 0;
-            this.levelScore = 0;
-            this.level++;   
-            this.grid.setup(this.levelTilesX, this.levelTilesY);
-            this.running = true;
-            this.grid.enabled = true;
-            this.levelTime = this.levelTilesX * LEVEL_TIME_MULT;
-            this.levelStartTime = createjs.Ticker.getTime();
-            this.updateLabels();
-        }   
+        this.levelTilesX = Math.min(this.grid.MAX_TILES_X, this.levelTilesX+1);
+        this.levelTilesY = Math.min(this.grid.MAX_TILES_Y, this.levelTilesY+1);
+        this.matchCountInLevel = 0;
+        this.levelScore = 0;
+        this.level++;   
+        this.grid.setup(this.levelTilesX, this.levelTilesY);
+        this.running = true;
+        this.grid.enabled = true;
+        this.levelTime = this.levelTilesX * LEVEL_TIME_MULT;
+        this.levelStartTime = createjs.Ticker.getTime();
+        this.updateLabels();
     };
     
     function exitButtonCallback(evt) {
@@ -277,7 +285,7 @@ var GameView = (function() {
     
     function onHideEvent(evt) {
         this.stage.removeChild(root);
-        createjs.Ticker.removeEventListener("tick", this.tick.bind(this));
+        //createjs.Ticker.removeEventListener("tick", this.tick.bind(this));
     }
     
     function scoreText(text, x, y) {
@@ -345,6 +353,13 @@ var GameView = (function() {
         return c;
     }
     
+    function soundButtonCallback(evt) {
+        this.playSounds = !this.playSounds;
+        this.soundButton.icon.image = this.resources.images[
+                    this.playSounds ? 'audio-on' : 'audio-off'];
+        this.soundButton.label.text = this.playSounds ? 'on' : 'off';
+    }
+    
     function hintButtonCallback(evt) {
         if (this.running && this.hintsLeft>0) {
             this.hintsLeft = Math.max(0, this.hintsLeft-1);
@@ -371,6 +386,9 @@ var GameView = (function() {
             this.levelScore += MATCH_SCORE_INC;
             this.totalScore += MATCH_SCORE_INC;
             this.updateLabels();
+            if (this.resources.soundWorks && this.playSounds) {
+                createjs.Sound.play("menu-click"); 
+            }
         }
     }
     
@@ -383,7 +401,20 @@ var GameView = (function() {
     function onLevelComplete() {
         this.running = false;
         this.grid.enabled = false;
-        this.modalPane.fadeIn('Level complete!', 'click to continue', this.nextLevel.bind(this));
+        
+        if (this.resources.soundWorks && this.playSounds) {
+            createjs.Sound.play("chime"); 
+        }
+        
+        //end of game
+        if (this.levelTilesX == this.grid.MAX_TILES_X 
+                 && this.levelTilesY == this.grid.MAX_TILES_Y) {
+            this.modalPane.fadeIn('You win!', 'final score: '+this.totalScore,
+                                  this.restart.bind(this));
+        } else {
+            this.modalPane.fadeIn('Level complete!', 'click to continue', 
+                                  this.nextLevel.bind(this));
+        }
     }
     
     return GameView;

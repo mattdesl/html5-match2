@@ -89,10 +89,12 @@ var Grid = (function() {
         this.container.addChild(this.outlineA);
         this.container.addChild(this.outlineB);
         
+        /*
         this.log = new createjs.Text("", resources.DEFAULT_FONT, '#fff');
         this.log.x = 5;
         this.log.y = 340;
         this.container.addChild(this.log);
+        */
         
         this.setup(this.MAX_TILES_X, this.MAX_TILES_Y);
     };
@@ -236,9 +238,9 @@ var Grid = (function() {
         
     //called whenever the grid is changed
     Grid.prototype.onChange = function() {
-        //TODO: use a more optimized algorithm here
-        //var start = new Date();
-        
+        //I could use a more optimized algorithm here, 
+        //but this works well enough for a 10x10 map
+                
         //first check to see if no matching cards are left
         var matchesRemaining = this.matchingTilesRemaining();
         
@@ -273,8 +275,6 @@ var Grid = (function() {
         if (gameOver && this.onComplete) {
             this.onComplete();
         }
-        //var end = new Date();
-        //this.log.text = (end-start);
     };
         
     Grid.prototype.allMatchingTiles = function(tileA) {
@@ -477,14 +477,11 @@ var Grid = (function() {
         this.outlineB.visible = false;
         this.outlineB.alpha = 0.0;
         
-        //TODO: center visible tiles instead of using top left
-        
         //constrain container size
         
         var area = tilesX * tilesY;
         var types = getShuffledTiles(area / 2);
-        //this.log.text = area;
-        
+                
         for (var x=0, count=0; x<this.MAX_TILES_X; x++) {
             for (var y=0; y<this.MAX_TILES_Y; y++) {
                 var t = this.tile(x, y);

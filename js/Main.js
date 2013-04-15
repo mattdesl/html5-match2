@@ -8,7 +8,7 @@ var modalPane;
 //Main entry-point of our HTML5 application
 function Main() {
     //get our HTML5 canvas element
-    var canvas = $('#gameCanvas')[0];
+    var canvas = document.getElementById('gameCanvas');
     
     //removes double-click issue with canvas
     canvas.onselectstart = function () { return false; }
@@ -55,12 +55,19 @@ function onLoaded() {
     gameView = new GameView(stage, resources, width, height, modalPane);
     gameView.onExit = gameViewExit.bind(this);
     
+    createjs.Ticker.addEventListener("tick", tick.bind(this));
     menuView.fadeIn();
+}
+
+function tick() {
+    menuView.tick();
+    gameView.tick();
+    stage.update();
 }
 
 function gameViewEnter() {
     menuView.fadeOut();
-    //menuView.fadeIn();
+    gameView.restart();
     gameView.fadeIn();   
 }
 

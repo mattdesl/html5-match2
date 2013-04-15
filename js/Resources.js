@@ -33,19 +33,21 @@ function Resources(stage, width, height) {
         
         //non-tile images
         {src:ASSETS_DIR+'wood.png', id:'wood'},
+        {src:ASSETS_DIR+'audio-on.png', id:'audio-on'},
+        {src:ASSETS_DIR+'audio-off.png', id:'audio-off'},
         {src:ASSETS_DIR+'clock.png', id:'clock'},
         {src:ASSETS_DIR+'glass.png', id:'hint'},
         {src:ASSETS_DIR+'power.png', id:'menu'},
-        {src:ASSETS_DIR+'button copy.png', id:'button-hover'},
+        {src:ASSETS_DIR+'button.png', id:'button-hover'},
         {src:ASSETS_DIR+'logo.png', id:'logo'},
-        {src:ASSETS_DIR+'clickanywhere2.png', id:'click-anywhere'},
+        {src:ASSETS_DIR+'clickanywhere.png', id:'click-anywhere'},
         {src:ASSETS_DIR+'instructions.png', id:'instructions'}
     ];
     
     //the list of sound file paths
     this.SOUND_PATHS = [
-        //{src:ASSETS_DIR+'Music.mp3|Music.ogg', id:'Music'},
-        //{src:ASSETS_DIR+'ExitReached.mp3|ExitReached.ogg', id:'ExitReached'}
+        {src:ASSETS_DIR+'menu-click.mp3|menu-click.ogg', id:'menu-click'},
+        {src:ASSETS_DIR+'chime.mp3|chime.ogg', id:'chime'}
     ];
     
     this.images = {};
@@ -105,6 +107,13 @@ function Resources(stage, width, height) {
     function onLoadComplete(evt) {
         
     }
+    
+    function containsStr(array, str) {
+        for (var i=0; i<array.length; i++)
+            if (array[i] == str)
+                return true;
+        return false;
+    }
         
     function onFileLoad(evt) {
         //determine type
@@ -117,7 +126,7 @@ function Resources(stage, width, height) {
                 this.images[evt.item.id] = img;
                 
                 //if the array is one of our tile images
-                if ($.inArray(evt.item.id, this.TILE_IMAGES) != -1)
+                if ( containsStr(this.TILE_IMAGES, evt.item.id) )
                     this.tileImages.push(img);
                 break;
             case createjs.LoadQueue.SOUND:
