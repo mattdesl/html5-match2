@@ -1,7 +1,6 @@
-//simple A* implementation, using references from Wikipedia
+//simple A* implementation, using the following references:
 //http://en.wikipedia.org/wiki/A*_search_algorithm
-
-//Since 
+//http://www.briangrinstead.com/blog/astar-search-algorithm-in-javascript
 
 //A less expensive alternative would be to store each tile with an "other" (x, y) index,
 //pointing to its match. However, this only work if we show each pair no more than once.

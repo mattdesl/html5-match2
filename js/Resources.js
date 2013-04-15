@@ -1,3 +1,5 @@
+//a simple function which loads up our resources
+
 function Resources(stage, width, height) {
     
     //PRIVATE MEMBERS
@@ -74,7 +76,7 @@ function Resources(stage, width, height) {
         stage.update(); //update with new progress label       
         
         //register WebAudio and HTML5 audio.. hopefully one of them works
-        createjs.Sound.registerPlugins([createjs.WebAudioPlugin, createjs.HTMLAudioPlugin]);
+        createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin, createjs.WebAudioPlugin]);
         
         //manifest starts with images only
         manifest = this.IMAGE_PATHS;

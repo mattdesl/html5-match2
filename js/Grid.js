@@ -1,3 +1,5 @@
+//the game grid, handling searching (A*), tile matching, etc.
+
 var Grid = (function() {
     
     var TILE_SIZE = 48;

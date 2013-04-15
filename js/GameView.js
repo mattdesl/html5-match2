@@ -1,3 +1,5 @@
+//the game panel, holding all the main GUI and handling some logic
+
 var GameView = (function() {
     
     var root;

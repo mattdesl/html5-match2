@@ -1,3 +1,10 @@
+//a modal pane shared across all states that acts a little
+//like your standard "LightBox"
+
+//It can show images or a two-tiered text message
+
+// (currently we only use it for simple GameView messages)
+
 var ModalPane = (function() {
     
     var FONT = FontStyle(28);

@@ -1,3 +1,5 @@
+//the main class which loads up our game and handles state changes
+
 var stage;  //EaselJS Stage
 var resources; //our Resources object
 var width, height; //width & height of our canvas
@@ -22,9 +24,6 @@ function Main() {
     //create the Stage for holding actors/entities
     stage = new createjs.Stage(canvas);
     stage.enableMouseOver(10);
-    
-    //only if i need mouse over, like cursors or hover animations...
-    //stage.enableMouseOver(10);
     
     //create our Resources object
     resources = new Resources(stage, width, height);

@@ -1,3 +1,5 @@
+//the main menu view, which displays instructions 
+
 var MenuView = (function() {
     
     var root;

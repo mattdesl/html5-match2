@@ -1,4 +1,4 @@
-//Standard Array shuffle utility
+//your standard Array shuffle utility
 Array.prototype.shuffle = function () {
     for (var i = this.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -9,10 +9,12 @@ Array.prototype.shuffle = function () {
     return this;
 };
 
+//a utility to return a font string for our HTML5 canvas rendering
 var FontStyle = function(size) {
     return size+'px Mouse Memoirs, sans-serif';   
 };
 
+//some utilities for graphics.. 
 var GraphicsUtils = new function() {
     
     //simple dashed line implementation for horizontal and vertical lines
