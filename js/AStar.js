@@ -1,3 +1,10 @@
+//simple A* implementation, using references from Wikipedia
+//http://en.wikipedia.org/wiki/A*_search_algorithm
+
+//Since 
+
+//A less expensive alternative would be to store each tile with an "other" (x, y) index,
+//pointing to its match. However, this only work if we show each pair no more than once.
 
 function Node(x, y, parent, g, h, f) {
     this.x = x;
@@ -50,7 +57,9 @@ function indexOf(list, node) {
     return -1;
 }
 
-function AStar(grid, startX, startY, endX, endY, columns, rows) {
+function AStar(grid, startX, startY, endX, endY, columns, rows, maxMoves) {
+    maxMoves = maxMoves || -1;
+    
     var startNode = new Node(startX, startY);
     var endNode = new Node(endX, endY);
     
@@ -91,9 +100,18 @@ function AStar(grid, startX, startY, endX, endY, columns, rows) {
         
         for (var i=0; i<neighb.length; i++) {
             var n = neighb[i];
-                        
+                
+            var tooFar = false;
+            
+            //if we have a limited number of moves
+            if (maxMoves!=-1) {
+                var dx = Math.abs(n.x - startNode.x);
+                var dy = Math.abs(n.y - startNode.y);
+                tooFar = dx>=maxMoves || dy>=maxMoves;
+            }
+            
             //grid true => walkable (i.e. not visible) 
-            if ( grid[n.x][n.y] || (n.x == endNode.x && n.y == endNode.y) ) {
+            if ( !tooFar && (grid[n.x][n.y] || (n.x == endNode.x && n.y == endNode.y)) ) {
                 //if the node is already in our closed list, skip it
                 if (indexOf(closed, n) != -1)
                     continue;

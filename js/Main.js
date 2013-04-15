@@ -2,12 +2,16 @@ var stage;  //EaselJS Stage
 var resources; //our Resources object
 var width, height; //width & height of our canvas
 var gameView;
+var menuView;
 var modalPane;
 
 //Main entry-point of our HTML5 application
 function Main() {
     //get our HTML5 canvas element
     var canvas = $('#gameCanvas')[0];
+    
+    //removes double-click issue with canvas
+    canvas.onselectstart = function () { return false; }
     
     width = canvas.width;
     height = canvas.height;
@@ -42,14 +46,27 @@ function onLoaded() {
     woodPattern.width = width;
     woodPattern.height = height;
     stage.addChild(woodPattern);
-    
+        
     modalPane = new ModalPane(stage, resources, width, height);
     
+    menuView = new MenuView(stage, resources, width, height, modalPane);
+    menuView.onClick = gameViewEnter.bind(this);
+    
     gameView = new GameView(stage, resources, width, height, modalPane);
-    gameView.onExit = onGameViewExit.bind(this);
-    gameView.fadeIn();
+    gameView.onExit = gameViewExit.bind(this);
+    
+    menuView.fadeIn();
 }
 
-function onGameViewExit() {
-    gameView.fadeOut();   
+function gameViewEnter() {
+    menuView.fadeOut();
+    //menuView.fadeIn();
+    gameView.fadeIn();   
+}
+
+function gameViewExit() {
+    //modalPane.fadeIn('test', 'two', gameView.restart.bind(gameView));
+    
+    gameView.fadeOut();
+    menuView.fadeIn();
 }

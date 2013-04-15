@@ -12,7 +12,7 @@ var Grid = (function() {
     var OUTLINE_COLOR = '#917056';
     var OUTLINE_FAIL_COLOR = '#a32a2a';
     var PATH_COLOR = '#9d897a';
-    var GRID_STROKE_COLOR = '#493829';
+    var GRID_STROKE_COLOR = '#37291c';//'#281d12';
     
     var Grid = function(stage, resources) {
         this.stage = stage;
@@ -77,6 +77,7 @@ var Grid = (function() {
         g.setStrokeStyle(this.border);
         g.rect(PIXEL_OFF, PIXEL_OFF, this.container.width, this.container.height);
         g.endStroke();
+        this.gridLines.cache(-2, -2,  this.container.width+3, this.container.height+3);
         
         this.pathShape = new createjs.Shape();
         this.pathShape.width = this.container.width;
@@ -236,7 +237,7 @@ var Grid = (function() {
     //called whenever the grid is changed
     Grid.prototype.onChange = function() {
         //TODO: use a more optimized algorithm here
-        var start = new Date();
+        //var start = new Date();
         
         //first check to see if no matching cards are left
         var matchesRemaining = this.matchingTilesRemaining();
@@ -272,10 +273,10 @@ var Grid = (function() {
         if (gameOver && this.onComplete) {
             this.onComplete();
         }
-        var end = new Date();
+        //var end = new Date();
         //this.log.text = (end-start);
     };
-    
+        
     Grid.prototype.allMatchingTiles = function(tileA) {
         lst = [];
         for (var x=0; x<this.MAX_TILES_X; x++) {
@@ -443,8 +444,11 @@ var Grid = (function() {
             }
         }
         
-        var path = AStar(graph, tileA.xIndex, tileA.yIndex, 
-                                tileB.xIndex, tileB.yIndex, this.MAX_TILES_X, this.MAX_TILES_Y);
+        var path = AStar(graph, 
+                         tileA.xIndex, tileA.yIndex, 
+                         tileB.xIndex, tileB.yIndex, 
+                         this.MAX_TILES_X, this.MAX_TILES_Y,
+                         MAX_MOVES);
         return path;
     };
     

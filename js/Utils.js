@@ -9,6 +9,10 @@ Array.prototype.shuffle = function () {
     return this;
 };
 
+var FontStyle = function(size) {
+    return size+'px Mouse Memoirs, sans-serif';   
+};
+
 var GraphicsUtils = new function() {
     
     //simple dashed line implementation for horizontal and vertical lines

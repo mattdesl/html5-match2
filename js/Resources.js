@@ -36,7 +36,10 @@ function Resources(stage, width, height) {
         {src:ASSETS_DIR+'clock.png', id:'clock'},
         {src:ASSETS_DIR+'glass.png', id:'hint'},
         {src:ASSETS_DIR+'power.png', id:'menu'},
-        {src:ASSETS_DIR+'button.png', id:'button-hover'}
+        {src:ASSETS_DIR+'button copy.png', id:'button-hover'},
+        {src:ASSETS_DIR+'logo.png', id:'logo'},
+        {src:ASSETS_DIR+'clickanywhere2.png', id:'click-anywhere'},
+        {src:ASSETS_DIR+'instructions.png', id:'instructions'}
     ];
     
     //the list of sound file paths
@@ -49,7 +52,7 @@ function Resources(stage, width, height) {
     this.tileImages = [];
     
     //some other public members that we can keep in Resources
-    this.DEFAULT_FONT = '20px Lato, sans-serif';
+    this.DEFAULT_FONT = FontStyle(26);
     
     // Callback for load completion
     this.onLoaded = function() {
@@ -59,7 +62,7 @@ function Resources(stage, width, height) {
     // Starts the progress loader
     this.load = function() {
         //Add our preload text
-        progressLabel = new createjs.Text('Loading assets...', this.DEFAULT_FONT, '#fff');
+        progressLabel = new createjs.Text('', this.DEFAULT_FONT, '#fff');
         progressLabel.x = width/2;
         progressLabel.y = height/2;
         progressLabel.textAlign = 'center';

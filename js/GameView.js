@@ -12,10 +12,10 @@ var GameView = (function() {
     var MATCH_SCORE_INC = 20;
     
     var TEXT_COLOR = '#806142';
-    var PANEL_COLOR = '#493829';
+    var PANEL_COLOR = '#37291c';
     var TIME_BAR_OFFSET = 2.0;
-    var SMALL_FONT = '12px Lato, sans-serif';
-    var SCORE_FONT = '12px Lato, sans-serif';
+    var SMALL_FONT = FontStyle(16);
+    var SCORE_FONT = FontStyle(16);
     var BUTTON_ICON_OFFSET_X = 7; //offset from left
     var BUTTON_TEXT_OFFSET_X = 9; //offset from right
     var BUTTON_OUT_ALPHA = 0.25;
@@ -133,7 +133,7 @@ var GameView = (function() {
         this.scorePanel.addChild(this.levelLabel);
         
         //get line off of first label
-        var lineOff = 5 + this.levelLabel.getMeasuredLineHeight();
+        var lineOff = 10 + this.levelLabel.getMeasuredLineHeight();
         
         this.levelScoreLabel = scoreText('Level Score: 0', 
                                 scoreX, scoreY += lineOff);
@@ -173,13 +173,13 @@ var GameView = (function() {
         createjs.Ticker.addEventListener("tick", this.tick.bind(this));
         this.stage.addChild(root);
         createjs.Tween.get(root, {override:true})
-            .to({alpha:1.0}, 1250, createjs.Ease.quadIn)
+            .to({alpha:1.0}, 500, createjs.Ease.quadIn)
             .call(onShowEvent.bind(this));
     };
     
     GameView.prototype.fadeOut = function() {
         createjs.Tween.get(root, {override:true})
-            .to({alpha:0.0}, 1250, createjs.Ease.quadIn)
+            .to({alpha:0.0}, 250, createjs.Ease.quadOut)
             .call(onHideEvent.bind(this));
     };
     
@@ -206,7 +206,7 @@ var GameView = (function() {
             if (amt<=0) {
                 this.running = false;
                 this.grid.enabled = false;
-                modalPane.fadeIn('you lose.. try again', this.restart.bind(this));
+                modalPane.fadeIn('Game over!', 'click to try again', this.restart.bind(this));
             }
         } else {
             this.timeRemainingLabel.text = '';
@@ -244,26 +244,31 @@ var GameView = (function() {
     
     //loads the next level
     GameView.prototype.nextLevel = function() {
-        this.matchCountInLevel = 0;
-        this.levelScore = 0;
-        this.level++;   
-        this.levelTilesX = Math.min(this.grid.MAX_TILES_X, this.levelTilesX+1);
-        this.levelTilesY = Math.min(this.grid.MAX_TILES_Y, this.levelTilesY+1);
-        this.grid.setup(this.levelTilesX, this.levelTilesY);
-        this.running = true;
-        this.grid.enabled = true;
-        this.levelTime = this.levelTilesX * LEVEL_TIME_MULT;
-        this.levelStartTime = createjs.Ticker.getTime();
-        this.updateLabels();
+        
+        if (this.levelTilesX == this.grid.MAX_TILES_X 
+                 && this.levelTilesY == this.grid.MAX_TILES_Y) {
+            modalPane.fadeIn('You win!', 'final score: '+this.totalScore,
+                                 this.restart.bind(this));
+        } else {
+            this.levelTilesX = Math.min(this.grid.MAX_TILES_X, this.levelTilesX+1);
+            this.levelTilesY = Math.min(this.grid.MAX_TILES_Y, this.levelTilesY+1);
+            this.matchCountInLevel = 0;
+            this.levelScore = 0;
+            this.level++;   
+            this.grid.setup(this.levelTilesX, this.levelTilesY);
+            this.running = true;
+            this.grid.enabled = true;
+            this.levelTime = this.levelTilesX * LEVEL_TIME_MULT;
+            this.levelStartTime = createjs.Ticker.getTime();
+            this.updateLabels();
+        }   
     };
     
     function exitButtonCallback(evt) {
         this.running = false;
         this.grid.enabled = false;
-        this.modalPane.fadeIn('restart',
-                              this.restart.bind(this));
-        //if (this.onExit)
-        //    this.onExit();
+        if (this.onExit)
+            this.onExit();
     }
             
     function onShowEvent(evt) {
@@ -378,7 +383,7 @@ var GameView = (function() {
     function onLevelComplete() {
         this.running = false;
         this.grid.enabled = false;
-        this.modalPane.fadeIn('level complete', this.nextLevel.bind(this));
+        this.modalPane.fadeIn('Level complete!', 'click to continue', this.nextLevel.bind(this));
     }
     
     return GameView;
