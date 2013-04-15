@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>share^2 - a match-two game</title>
+    
+<!-- load up some nice fonts -->
+<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Mouse+Memoirs' rel='stylesheet' type='text/css'>
+<link href="css/style.css" rel="stylesheet" media="all" type="text/css" />
+
+<!-- uses CreateJS to unify preloading, sound, animations, etc -->    
+<script src="js/createjs.min.js"></script>
+
+<!-- Begin game modules -->
+<script src="js/Utils.js"></script>
+<script src="js/Resources.js"></script>
+<script src="js/AStar.js"></script>
+<script src="js/Grid.js"></script>
+<script src="js/ModalPane.js"></script>
+<script src="js/MenuView.js"></script>
+<script src="js/GameView.js"></script>
+<script src="js/Main.js"></script>
+</head>
+
+<!-- begin main content -->
+<body onload="Main();"  >
+	<div class="container">
+		<canvas id="gameCanvas" width="610" height="520">
+			Your browser doesn't support HTML5 canvas.
+		</canvas>
+	</div>
+    <div class="footer">
+        <p>
+        Developed by Matt DesLauriers. See the 
+        <a href="https://github.com/mattdesl/html5-match2" target="_blank">Github Repo</a> 
+        for details and source code.
+        </p>
+    </div>
+</body>
+</html>
