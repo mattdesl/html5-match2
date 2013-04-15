@@ -1,3 +1,5 @@
+![Logo](http://mattdesl.github.io/html5-match2/assets/logo-alt.png)
+
 ## Share<sup>2</sup>
 
 **Share<sup>2</sup>** (or "Share Squared") is an open source match-two game that uses HTML5 canvas for rendering. 
