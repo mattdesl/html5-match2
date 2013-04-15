@@ -1,3 +1,5 @@
-html5-match2
-============
-test
+** developed by Matt DesLauriers **
+
+== Open Source HTML5 Game ==
+
+http://mattdesl.github.io/html5-match2/
