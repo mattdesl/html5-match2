@@ -1,0 +1,16 @@
+body {
+    padding: 0px;
+    margin: 10px;
+    background-color: #1f1f1f;
+    font-family: Lato, sans-serif;
+}
+
+.footer {
+    color: #949494;
+    font-size: 9pt; 
+    margin-top: 10px;
+}
+
+#gameCanvas {
+    background-color: black;
+}
