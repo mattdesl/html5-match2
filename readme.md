@@ -1,6 +1,6 @@
-## Share^2
+## Share<sup>2</sup>
 
-**Share^2** (or "Share Squared") is an open source match-two game that uses HTML5 canvas for rendering. 
+**Share<sup>2</sup>** (or "Share Squared") is an open source match-two game that uses HTML5 canvas for rendering. 
 It uses CreateJS suite for various utilities, including pre-loading, sound, rendering organization, and more.
 
 You can play the game live here:  
