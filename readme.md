@@ -9,7 +9,7 @@ You can play the game live here:
 http://mattdesl.github.io/html5-match2/
 
 Created by Matt DesLauriers. 
-The source code is licensed under [GPL-3.0](http://www.tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)).
+The source code is licensed under [GPL-3.0](http://opensource.org/licenses/gpl-3.0.html).
 
 ## Artwork & Sound
 
