@@ -8,6 +8,9 @@ It uses CreateJS suite for various utilities, including pre-loading, sound, rend
 You can play the game live here:  
 http://mattdesl.github.io/html5-match2/
 
+If it's not loading past 89%, you can try running it without sound:  
+http://mattdesl.github.io/html5-match2/nosound.html
+
 Created by Matt DesLauriers. 
 
 ## Artwork & Sound
@@ -47,4 +50,3 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
->>>>>>> refs/remotes/origin/master
