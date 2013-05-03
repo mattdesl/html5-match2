@@ -24,7 +24,6 @@ The sound effects are from [Freesound.org](http://www.freesound.org/):
 [success_low.wav](http://www.freesound.org/people/grunz/sounds/109663/)  
 [Menu Selection Click.wav](http://www.freesound.org/people/NenadSimic/sounds/171697/)
 
-
 ## License
 
 ```
@@ -48,3 +47,4 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
+>>>>>>> refs/remotes/origin/master

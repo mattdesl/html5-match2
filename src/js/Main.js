@@ -8,7 +8,7 @@ var menuView;
 var modalPane;
 
 //Main entry-point of our HTML5 application
-function Main() {
+function Main(soundOn) {
     //get our HTML5 canvas element
     var canvas = document.getElementById('gameCanvas');
     
@@ -26,7 +26,7 @@ function Main() {
     stage.enableMouseOver(10);
     
     //create our Resources object
-    resources = new Resources(stage, width, height);
+    resources = new Resources(stage, width, height, soundOn);
     resources.onLoaded = onLoaded;
     resources.load();
     
