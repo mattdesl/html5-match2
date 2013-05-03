@@ -1,6 +1,6 @@
 //a simple function which loads up our resources
 
-function Resources(stage, width, height) {
+function Resources(stage, width, height, soundOn) {
     
     //PRIVATE MEMBERS
     //---------------
@@ -85,7 +85,7 @@ function Resources(stage, width, height) {
         this.preloader = new createjs.LoadQueue();
         
         //check if sound is available
-        if (createjs.Sound.isReady()) {
+        if (soundOn && createjs.Sound.isReady()) {
             this.soundWorks = true;
             
             //install the sound plugin
